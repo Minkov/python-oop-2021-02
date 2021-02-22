@@ -19,4 +19,5 @@ class Cup:
 cup = Cup(100, 50)
 cup.fill(50)
 cup.fill(10)
+
 print(cup.status())
