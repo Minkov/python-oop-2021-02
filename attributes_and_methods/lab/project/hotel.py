@@ -34,6 +34,6 @@ class Hotel:
         free_rooms_numbers = [str(room) for room in self.rooms if not room.is_taken]
         taken_rooms_numbers = [str(room) for room in self.rooms if room.is_taken]
 
-        print(f'''Hotel {self.name} has {self.guests} total guests
-Free rooms: {", ".join(free_rooms_numbers)}
-Taken rooms: {", ".join(taken_rooms_numbers)}''')
+        print(f'Hotel {self.name} has {self.guests} total guests')
+        print(f'Free rooms: {", ".join(free_rooms_numbers)}')
+        print(f'Taken rooms: {", ".join(taken_rooms_numbers)}''')
