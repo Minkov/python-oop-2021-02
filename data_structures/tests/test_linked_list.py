@@ -1,11 +1,11 @@
 from unittest import TestCase
 
-from array_list import ArrayList
+from lists.linked_list import LinkedList
 
 
-class TestArrayList(TestCase):
+class TestLinkedList(TestCase):
     def setUp(self):
-        self.al = ArrayList()
+        self.al = LinkedList()
 
     def test_append__when_list_is_empty__expect_append_to_the_end(self):
         self.al.append(1)
@@ -31,6 +31,11 @@ class TestArrayList(TestCase):
         list_values = list(self.al)
 
         self.assertListEqual(values, list_values)
+
+    def test_append__expect_to_increase_size(self):
+        self.al.append(1)
+
+        self.assertEqual(1, self.al.size())
 
     def test_remove__when_index_is_valid__expect_remove_values_and_return_it(self):
         self.al.append(1)
@@ -118,7 +123,7 @@ class TestArrayList(TestCase):
         with self.assertRaises(IndexError):
             self.al.insert(self.al.size() + 1, 2)
 
-    def test_pop__expect_to_remove_the_last_element_and_return_it(self):
+    def test_pop__expect_to_remove_the_last_value_and_return_it(self):
         self.al.append(1)
         self.al.append(2)
         self.al.append(3)
@@ -190,14 +195,6 @@ class TestArrayList(TestCase):
         actual_count = self.al.count(55)
         self.assertEqual(expected_count, actual_count)
 
-    def test_reverse__expect_in_reversed_order(self):
-        [self.al.append(x) for x in range(5)]
-
-        expected = [x for x in range(4, -1, -1)]
-        actual = self.al.reverse()
-
-        self.assertListEqual(expected, actual)
-
     def test_copy__expect_to_return_another_list_with_same_values(self):
         [self.al.append(x) for x in range(5)]
 
@@ -220,83 +217,3 @@ class TestArrayList(TestCase):
         self.al.add_first(1)
 
         self.assertListEqual([1, 0, 1, 2, 3, 4], list(self.al))
-
-    def test_dictionize__when_empty__expect_empty_dict(self):
-        actual = self.al.dictionize()
-        expected = {}
-        self.assertDictEqual(expected, actual)
-
-    def test_dictionize__when_even_elements_count__expect_correct_result(self):
-        self.al.append(1)
-        self.al.append(2)
-        self.al.append(3)
-        self.al.append(4)
-
-        actual = self.al.dictionize()
-        expected = {
-            1: 2,
-            3: 4,
-        }
-        self.assertDictEqual(expected, actual)
-
-    def test_dictionize__when_odd_elements_count__expect_correct_result(self):
-        self.al.append(1)
-        self.al.append(2)
-        self.al.append(3)
-        self.al.append(4)
-        self.al.append(5)
-
-        actual = self.al.dictionize()
-        expected = {
-            1: 2,
-            3: 4,
-            5: ' ',
-        }
-        self.assertDictEqual(expected, actual)
-
-    def test_move_when_list_empty__expect_to_move_nothing(self):
-        self.al.move(1)
-        self.assertListEqual([], list(self.al))
-
-    def test_move__when_moving_1_element__expect_to_move_1_element_from_the_start_to_the_end(self):
-        self.al.append(1)
-        self.al.append(2)
-        self.al.append(3)
-        self.al.append(4)
-        self.al.move(1)
-
-        self.assertListEqual([2, 3, 4, 1], list(self.al))
-
-    def test_move__when_moving_3_elements__expect_to_move_3_element_from_the_start_to_the_end(self):
-        self.al.append(1)
-        self.al.append(2)
-        self.al.append(3)
-        self.al.append(4)
-        self.al.move(3)
-
-        self.assertListEqual([4, 1, 2, 3], list(self.al))
-
-    def test_move__when_moving_3_elements_and_have_2_elements__expect_to_move_3_element_from_the_start_to_the_end(self):
-        self.al.append(1)
-        self.al.append(2)
-        self.al.move(3)
-
-        self.assertListEqual([2, 1], list(self.al))
-
-    def test_underbound__expect_to_return_min_element(self):
-        values = [x for x in range(15)]
-        [self.al.append(x) for x in values]
-
-        expected = min(values)
-        actual = self.al.underbound()
-
-        self.assertEqual(expected, actual)
-
-    def test_overbound__expect_to_return_max_element(self):
-        values = [x for x in range(15)]
-        [self.al.append(x) for x in values]
-
-        expected = max(values)
-        actual = self.al.overbound()
-
-        self.assertEqual(expected, actual)
